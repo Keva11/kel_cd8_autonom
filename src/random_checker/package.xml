@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>random_checker</name>
+  <version>0.0.1</version>
+  <description>Random number generator and checker</description>
+  <maintainer email="your_email@example.com">Your Name</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+</package>
