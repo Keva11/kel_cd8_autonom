@@ -1,6 +1,6 @@
 /// launch/random_number_launch.py
-from launch import LaunchDescription
-from launch_ros.actions import Node
+from random_number_launch import LaunchDescription
+from random_number_launch_ros.actions import Node
 
 def generate_launch_description():
     return LaunchDescription([
