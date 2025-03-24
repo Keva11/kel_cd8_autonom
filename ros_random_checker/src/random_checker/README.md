@@ -1,4 +1,5 @@
-Leírás
+Leírás:
+-----------------------------------------------
 A Random Number Checker egy ROS 2 alapú alkalmazás, amely két node-ot tartalmaz:
 ----------------------------------------------------------------------------------------
 Random Number Publisher: Véletlenszámokat generál, és azokat egy topic-on keresztül publikálja.
