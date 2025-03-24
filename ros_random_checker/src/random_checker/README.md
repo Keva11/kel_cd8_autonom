@@ -1,84 +1,109 @@
-Leírás:
------------------------------------------------
-A Random Number Checker egy ROS 2 alapú alkalmazás, amely két node-ot tartalmaz:
-----------------------------------------------------------------------------------------
-Random Number Publisher: Véletlenszámokat generál, és azokat egy topic-on keresztül publikálja.
+# ROS 2 Random Number Checker
 
-Number Checker Subscriber: A véletlenszámokat figyeli, és ha a szám páros, kiírja, hogy "Even", ha páratlan, akkor "Odd".
+## 1. Projekt leírása
+Ez a projekt egy egyszerű ROS 2 alkalmazás, amely egy **véletlenszám-generátort** (
+publisher) és egy **ellenőrző node-ot** (subscriber) tartalmaz. A publisher **véletlenszámokat**
+generál és elküldi a ROS topic-ra, a subscriber pedig ellenőrzi, hogy a szám **páros vagy páratlan**, majd kiírja az eredményt a konzolra.
 
-A projekt célja, hogy bemutassa a ROS 2 node-ok és a topic-ok használatát, és gyakorlati tapasztalatot nyújtson a ROS 2 kommunikációs mechanizmusával kapcsolatban.
+---
 
-Telepítés
-------------------------------------------------------------------
-1. Lépj a ROS 2 workspace-be
-Ha még nem rendelkezel workspace-tel, hozd létre a következő parancsokkal:
+## 2. Telepítés és build
 
+### **2.1. Klónozd a repository-t**
 
+```bash
+mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
+git clone https://github.com/YOUR_USERNAME/ros2-random-checker.git
+cd ~/ros2_ws/
+```
+*(Cseréld ki `YOUR_USERNAME`-t a GitHub felhasználónevedre!)*
 
-----------------------------------------
-2. Repository klónozása
-Klónozd a projekt repository-ját:
+### **2.2. Buildelés**
 
-
-git clone https://github.com/Felhasznalonev/random_number_checker.git
-
----------------------------------------------------------------------
-3. Workspace buildelése
-Lépj vissza a workspace gyökérmappájába, és építsd meg a csomagot:
-
-
-cd ~/ros2_ws
+```bash
 colcon build --packages-select random_checker
 source install/setup.bash
+```
 
-Futtatás
---------------------------------------------
-1. Random Number Publisher (Véletlenszám generáló)
-Indítsd el a véletlenszám generáló node-ot:
+Ha sikeres volt a fordítás, folytathatod az indítással.
 
+---
 
-ros2 run random_checker random_number_publisher
+## 3. A program futtatása
 
-------------------------------------------------------
-2. Number Checker Subscriber (Páros/Páratlan szám ellenőrző)
-Indítsd el a szám ellenőrző node-ot:
-
-
-ros2 run random_checker number_checker_subscriber
-
----------------------------------------------------------------
-3. Launch fájl használata
-A launch fájl egyszerre indítja el a két node-ot, ha nem szeretnéd külön-külön indítani őket:
-
+### **3.1. Indítás launch fájllal**
+A programot egyetlen paranccsal is indíthatod:
+```bash
 ros2 launch random_checker random_number_launch.py
+```
+Ha minden jól működik, a terminálban ezt kell látnod:
+```
+[INFO] [random_number_publisher]: Publishing: 42
+[INFO] [number_checker_subscriber]: 42 is even
+[INFO] [random_number_publisher]: Publishing: 17
+[INFO] [number_checker_subscriber]: 17 is odd
+```
 
-Felépítés
-----------------------------
-A rendszer két ROS 2 csomópontból (node) áll:
+### **3.2. Node-ok indítása külön**
 
-random_number_publisher:
+Ha külön akarod futtatni a node-okat:
 
-Véletlenszámokat generál és közreadja azokat a /random_number topicon.
+**Publisher indítása:**
+```bash
+ros2 run random_checker random_number_publisher
+```
+**Subscriber indítása egy másik terminálban:**
+```bash
+ros2 run random_checker number_checker_subscriber
+```
 
-Véletlenszámok generálása történik egyenletes eloszlással 0-100 között.
+Ha helyesen futnak, a subscriber kiírja, hogy a szám páros vagy páratlan.
 
-number_checker_subscriber:
+---
 
-Feliratkozik a /random_number topicra.
+## 4. Mermaid diagram
+A következő Mermaid diagram szemlélteti a **node-ok** és a **topic** kapcsolatát:
 
-Minden érkező számot ellenőriz, és kiírja, hogy "Even" vagy "Odd", attól függően, hogy páros vagy páratlan a szám.
+```mermaid
+graph TD;
+    A[Random Number Publisher] -->|Publishes /random_number| B[Number Checker Subscriber]
+    B -->|Logs result| C[Console Output]
+```
 
-Kódstruktúra
-------------------------------------------------------------------------------
-A csomag tartalmazza a következő fájlokat:
+---
 
-random_number_publisher.cpp: A véletlenszám generáló node.
+## 5. Hibakeresés
 
-number_checker_subscriber.cpp: A szám ellenőrző node.
+### **5.1. A launch fájl nem indul**
+Ha a launch fájl nem indul, ellenőrizd az alábbiakat:
+- **Engedélyek beállítása**:
+  ```bash
+  chmod +x launch/random_number_launch.py
+  ```
+- **Telepítve van-e a launch fájl?** Ellenőrizd, hogy benne van a CMakeLists.txt-ben:
+  ```cmake
+  install(DIRECTORY launch/
+    DESTINATION share/${PROJECT_NAME}/
+  )
+  ```
+- **Package.xml ellenőrzése**: Tartalmazza-e a launch függőséget?
+  ```xml
+  <exec_depend>launch</exec_depend>
+  ```
 
-random_number_launch.py: A launch fájl, amely egyszerre indítja el a két node-ot.
+### **5.2. A topic nem működik**
+Ellenőrizd, hogy a topic valóban létezik:
+```bash
+ros2 topic list
+```
+Majd nézd meg az üzeneteket:
+```bash
+ros2 topic echo /random_number
+```
 
-CMakeLists.txt és package.xml: A csomag build konfigurációs fájljai.
+Ha semmi nem jelenik meg, akkor lehet, hogy a publisher nem fut.
 
-README.md: A dokumentációs fájl, amely tartalmazza a telepítési és futtatási lépéseket.
+---
+
+
