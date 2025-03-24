@@ -1,6 +1,6 @@
 Leírás
 A Random Number Checker egy ROS 2 alapú alkalmazás, amely két node-ot tartalmaz:
-
+----------------------------------------------------------------------------------------
 Random Number Publisher: Véletlenszámokat generál, és azokat egy topic-on keresztül publikálja.
 
 Number Checker Subscriber: A véletlenszámokat figyeli, és ha a szám páros, kiírja, hogy "Even", ha páratlan, akkor "Odd".
@@ -8,6 +8,7 @@ Number Checker Subscriber: A véletlenszámokat figyeli, és ha a szám páros, 
 A projekt célja, hogy bemutassa a ROS 2 node-ok és a topic-ok használatát, és gyakorlati tapasztalatot nyújtson a ROS 2 kommunikációs mechanizmusával kapcsolatban.
 
 Telepítés
+------------------------------------------------------------------
 1. Lépj a ROS 2 workspace-be
 Ha még nem rendelkezel workspace-tel, hozd létre a következő parancsokkal:
 
@@ -46,7 +47,9 @@ bash
 Másolás
 Szerkesztés
 ros2 run random_checker number_checker_subscriber
+
 3. Launch fájl használata (Opció)
+-------------------------------------------------------------------
 A launch fájl egyszerre indítja el a két node-ot, ha nem szeretnéd külön-külön indítani őket:
 
 bash
@@ -69,6 +72,7 @@ Feliratkozik a /random_number topicra.
 Minden érkező számot ellenőriz, és kiírja, hogy "Even" vagy "Odd", attól függően, hogy páros vagy páratlan a szám.
 
 Kódstruktúra
+------------------------------------------------------------------------------
 A csomag tartalmazza a következő fájlokat:
 
 random_number_publisher.cpp: A véletlenszám generáló node.
