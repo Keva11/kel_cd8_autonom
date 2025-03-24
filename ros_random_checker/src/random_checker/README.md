@@ -12,27 +12,21 @@ Telepítés
 1. Lépj a ROS 2 workspace-be
 Ha még nem rendelkezel workspace-tel, hozd létre a következő parancsokkal:
 
-bash
-Másolás
-Szerkesztés
+
 cd ~/ros2_ws/src
 
 ----------------------------------------
 2. Repository klónozása
 Klónozd a projekt repository-ját:
 
-bash
-Másolás
-Szerkesztés
+
 git clone https://github.com/Felhasznalonev/random_number_checker.git
 
 ---------------------------------------------------------------------
 3. Workspace buildelése
 Lépj vissza a workspace gyökérmappájába, és építsd meg a csomagot:
 
-bash
-Másolás
-Szerkesztés
+
 cd ~/ros2_ws
 colcon build --packages-select random_checker
 source install/setup.bash
@@ -42,28 +36,24 @@ Futtatás
 1. Random Number Publisher (Véletlenszám generáló)
 Indítsd el a véletlenszám generáló node-ot:
 
-bash
-Másolás
-Szerkesztés
+
 ros2 run random_checker random_number_publisher
 
 ------------------------------------------------------
 2. Number Checker Subscriber (Páros/Páratlan szám ellenőrző)
 Indítsd el a szám ellenőrző node-ot:
 
-bash
-Másolás
-Szerkesztés
+
 ros2 run random_checker number_checker_subscriber
 
 ---------------------------------------------------------------
 3. Launch fájl használata
 A launch fájl egyszerre indítja el a két node-ot, ha nem szeretnéd külön-külön indítani őket:
-bash
-Másolás
-Szerkesztés
+
 ros2 launch random_checker random_number_launch.py
+
 Felépítés
+----------------------------
 A rendszer két ROS 2 csomópontból (node) áll:
 
 random_number_publisher:
