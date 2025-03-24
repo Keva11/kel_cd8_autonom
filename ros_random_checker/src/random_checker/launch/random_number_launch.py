@@ -1,4 +1,4 @@
-/// launch/random_number_launch.py
+
 from random_number_launch import LaunchDescription
 from random_number_launch_ros.actions import Node
 
